@@ -2,11 +2,13 @@ package metaforce
 
 import (
 	"encoding/base64"
+	"strconv"
 )
 
 type ForceClient struct {
 	portType    *MetadataPortType
 	loginResult *LoginResult
+	apiVersion  string
 }
 
 func NewForceClient(endpoint string, apiversion string) *ForceClient {
@@ -14,7 +16,10 @@ func NewForceClient(endpoint string, apiversion string) *ForceClient {
 		endpoint = "login.salesforce.com"
 	}
 	portType := NewMetadataPortType("https://"+endpoint+"/services/Soap/u/"+apiversion, true, nil)
-	return &ForceClient{portType: portType}
+	return &ForceClient{
+		portType: portType,
+		apiVersion: apiversion,
+	}
 }
 
 func (client *ForceClient) Login(username string, password string) error {
@@ -41,11 +46,55 @@ func (client *ForceClient) Deploy(buf []byte, options *DeployOptions) (*DeployRe
 }
 
 func (client *ForceClient) CheckDeployStatus(resultId *ID, includeDetails bool) (*CheckDeployStatusResponse, error) {
-	check_request := CheckDeployStatus{AsyncProcessId: resultId, IncludeDetails: includeDetails}
-	return client.portType.CheckDeployStatus(&check_request)
+	request := CheckDeployStatus{AsyncProcessId: resultId, IncludeDetails: includeDetails}
+	return client.portType.CheckDeployStatus(&request)
 }
 
-func (client *ForceClient) CancelDeploy(resultId *ID) (*CancelDeployResponse, error) {
-	cancel_deploy_request := CancelDeploy{AsyncProcessId: resultId}
-	return client.portType.CancelDeploy(cancel_deploy_request)
+func (client *ForceClient) CancelDeploy(processId *ID) (*CancelDeployResponse, error) {
+	request := CancelDeploy{AsyncProcessId: processId}
+	return client.portType.CancelDeploy(&request)
 }
+
+func (client *ForceClient) DescribeMetadata() (*DescribeMetadataResponse, error) {
+	f, err := strconv.ParseFloat(client.apiVersion, 32)
+	if err != nil {
+		f = 37.0
+	}
+
+	request := DescribeMetadata{AsOfVersion: f}
+	return client.portType.DescribeMetadata(&request)
+}
+
+func (client *ForceClient) DescribeValueType(desc_type string) (*DescribeValueTypeResponse, error) {
+	request := DescribeValueType{
+		Type: desc_type,
+	}
+	return client.portType.DescribeValueType(&request)
+}
+
+func (client *ForceClient) ListMetadata(listMetadataQuery []*ListMetadataQuery) (*ListMetadataResponse, error) {
+	f, err := strconv.ParseFloat(client.apiVersion, 32)
+	if err != nil {
+		f = 37.0
+	}
+
+	request := ListMetadata{
+		Queries: listMetadataQuery,
+		AsOfVersion: f,
+	}
+	return client.portType.ListMetadata(&request)
+}
+
+
+//func (client *ForceClient) Retrieve() () {
+//	retrieve_request := Retrieve{
+//		RetrieveRequest: &RetrieveRequest{
+//			ApiVersion: "37.0",
+//			PackageNames,
+//			SinglePackage,
+//			SpecificFiles,
+//			Unpackaged *Package,
+//		},
+//	}
+//	return client.portType.Retrieve(retrieve_request)
+//}

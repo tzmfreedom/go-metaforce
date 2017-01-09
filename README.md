@@ -33,22 +33,27 @@ err := client.Login("username", "password")
 
 * Deploy
 ```golang
-response, err := client.Deploy(buf.Bytes())
+res, err := client.Deploy(buf.Bytes())
 ```
 
 * Check Deploy Status
 
 ```golang
-response, err := client.CheckDeployStatus(resultId)
+res, err := client.CheckDeployStatus(resultId)
 ```
 
 * Cancel Deploy
 
 ```golang
-response, err := client.
+var rId metaforce.ID = "0Af*********"
+res, err := client.CancelDeploy(&rId)
 ```
 
 * Check Retrieve Status
+
+```
+
+```
 
 * Create Metadata
 
@@ -58,9 +63,24 @@ response, err := client.
 
 * Describe Metadata
 
+```golang
+res, err := client.DescribeMetadata()
+```
+
 * Describe ValueType
+```golang
+res, err := client.DescribeValueType("{http://soap.sforce.com/2006/04/metadata}ApexClass")
+```
 
 * List Metadata
+```golang
+query := []*metaforce.ListMetadataQuery{
+  &metaforce.ListMetadataQuery{
+    Type: "ApexClass",
+  },
+}
+res, err := client.ListMetadata(query)
+```
 
 * Read Metadata
 

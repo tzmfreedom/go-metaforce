@@ -4419,7 +4419,7 @@ type DescribeMetadataResponse struct {
 type DescribeValueType struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata describeValueType"`
 
-	Type_ string `xml:"type,omitempty"`
+	Type string `xml:"type,omitempty"`
 }
 
 type DescribeValueTypeResponse struct {
@@ -4637,8 +4637,6 @@ type RetrieveResult struct {
 }
 
 type FileProperties struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata FileProperties"`
-
 	CreatedById string `xml:"createdById,omitempty"`
 
 	CreatedByName string `xml:"createdByName,omitempty"`
@@ -12779,9 +12777,6 @@ type DeployOptions struct {
 }
 
 type AsyncResult struct {
-	// Modify
-	//	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata AsyncResult"`
-
 	Done bool `xml:"done,omitempty"`
 
 	Id *ID `xml:"id,omitempty"`
@@ -12794,8 +12789,6 @@ type AsyncResult struct {
 }
 
 type DescribeMetadataResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata DescribeMetadataResult"`
-
 	MetadataObjects []*DescribeMetadataObject `xml:"metadataObjects,omitempty"`
 
 	OrganizationNamespace string `xml:"organizationNamespace,omitempty"`
@@ -12806,8 +12799,6 @@ type DescribeMetadataResult struct {
 }
 
 type DescribeMetadataObject struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata DescribeMetadataObject"`
-
 	ChildXmlNames []string `xml:"childXmlNames,omitempty"`
 
 	DirectoryName string `xml:"directoryName,omitempty"`
@@ -12822,8 +12813,6 @@ type DescribeMetadataObject struct {
 }
 
 type DescribeValueTypeResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata DescribeValueTypeResult"`
-
 	ApiCreatable bool `xml:"apiCreatable,omitempty"`
 
 	ApiDeletable bool `xml:"apiDeletable,omitempty"`
@@ -12838,8 +12827,6 @@ type DescribeValueTypeResult struct {
 }
 
 type ValueTypeField struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ValueTypeField"`
-
 	Fields []*ValueTypeField `xml:"fields,omitempty"`
 
 	ForeignKeyDomain []string `xml:"foreignKeyDomain,omitempty"`
@@ -12860,8 +12847,6 @@ type ValueTypeField struct {
 }
 
 type PicklistEntry struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata PicklistEntry"`
-
 	Active bool `xml:"active,omitempty"`
 
 	DefaultValue bool `xml:"defaultValue,omitempty"`
@@ -12878,7 +12863,7 @@ type ListMetadataQuery struct {
 
 	Folder string `xml:"folder,omitempty"`
 
-	Type_ string `xml:"type,omitempty"`
+	Type string `xml:"type,omitempty"`
 }
 
 type ReadResult struct {
