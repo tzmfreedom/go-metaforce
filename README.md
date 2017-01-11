@@ -16,13 +16,13 @@ import "github.com/tzmfreedom/metaforce"
 
 * Login to production/developer
 ```
-client := metaforce.NewForceClient("", "v37.0")
+client := metaforce.NewForceClient("", "37.0")
 err := client.Login("username", "password")
 ```
 
 * Login to sandbox
 ```golang
-client := metaforce.NewForceClient("test.salesforce.com", "v37.0")
+client := metaforce.NewForceClient("test.salesforce.com", "37.0")
 err := client.Login("username", "password")
 ```
 
@@ -56,6 +56,10 @@ res, err := client.CancelDeploy(&rId)
 ```
 
 * Create Metadata
+
+```
+
+```
 
 * Delete Metadata
 
