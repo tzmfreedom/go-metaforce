@@ -85,6 +85,13 @@ func (client *ForceClient) ListMetadata(listMetadataQuery []*ListMetadataQuery) 
 	return client.portType.ListMetadata(&request)
 }
 
+func (client *ForceClient) CreateMetadata(metadata []MetadataInterface) (*CreateMetadataResponse, error) {
+	request := CreateMetadata{
+		Metadata: metadata,
+	}
+	return client.portType.CreateMetadata(&request)
+}
+
 
 //func (client *ForceClient) Retrieve() () {
 //	retrieve_request := Retrieve{

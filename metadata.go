@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"time"
+	_ "fmt"
 )
 
 // against "unused imports"
@@ -4353,13 +4354,13 @@ type CheckRetrieveStatusResponse struct {
 }
 
 type CreateMetadata struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createMetadata"`
+	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata create"`
 
-	Metadata []*Metadata `xml:"metadata,omitempty"`
+	Metadata []MetadataInterface `xml:"metadata,omitempty"`
 }
 
 type CreateMetadataResponse struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createMetadataResponse"`
+	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createResponse"`
 
 	Result []*SaveResult `xml:"result,omitempty"`
 }
@@ -4780,6 +4781,8 @@ type RunTestSuccess struct {
 	Time float64 `xml:"time,omitempty"`
 }
 
+type MetadataInterface interface {}
+
 type Metadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata Metadata"`
 
@@ -5121,8 +5124,6 @@ type ApprovalEntryCriteria struct {
 }
 
 type FilterItem struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata FilterItem"`
-
 	Field string `xml:"field,omitempty"`
 
 	Operation *FilterOperation `xml:"operation,omitempty"`
@@ -6543,10 +6544,6 @@ type FeedFilterCriterion struct {
 }
 
 type CustomField struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata CustomField"`
-
-	*Metadata
-
 	CaseSensitive bool `xml:"caseSensitive,omitempty"`
 
 	CustomDataType string `xml:"customDataType,omitempty"`
@@ -6637,7 +6634,7 @@ type CustomField struct {
 
 	TrackTrending bool `xml:"trackTrending,omitempty"`
 
-	Type_ *FieldType `xml:"type,omitempty"`
+	Type *FieldType `xml:"type,omitempty"`
 
 	Unique bool `xml:"unique,omitempty"`
 
@@ -6649,8 +6646,6 @@ type CustomField struct {
 }
 
 type LookupFilter struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata LookupFilter"`
-
 	Active bool `xml:"active,omitempty"`
 
 	BooleanFilter string `xml:"booleanFilter,omitempty"`
@@ -6667,8 +6662,6 @@ type LookupFilter struct {
 }
 
 type Picklist struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata Picklist"`
-
 	ControllingField string `xml:"controllingField,omitempty"`
 
 	PicklistValues []*PicklistValue `xml:"picklistValues,omitempty"`
@@ -6679,8 +6672,6 @@ type Picklist struct {
 }
 
 type ValueSet struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ValueSet"`
-
 	ControllingField string `xml:"controllingField,omitempty"`
 
 	Restricted bool `xml:"restricted,omitempty"`
@@ -6795,9 +6786,11 @@ type CustomMetadataValue struct {
 }
 
 type CustomObject struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata CustomObject"`
+	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata metadata"`
 
-	*Metadata
+	Type string `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+
+	FullName string `xml:"fullName"`
 
 	ActionOverrides []*ActionOverride `xml:"actionOverrides,omitempty"`
 
@@ -6893,8 +6886,6 @@ type CustomObject struct {
 }
 
 type ArticleTypeChannelDisplay struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ArticleTypeChannelDisplay"`
-
 	ArticleTypeTemplates []*ArticleTypeTemplate `xml:"articleTypeTemplates,omitempty"`
 }
 
@@ -6933,8 +6924,6 @@ type FieldSetItem struct {
 }
 
 type HistoryRetentionPolicy struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata HistoryRetentionPolicy"`
-
 	ArchiveAfterMonths int32 `xml:"archiveAfterMonths,omitempty"`
 
 	ArchiveRetentionYears int32 `xml:"archiveRetentionYears,omitempty"`
@@ -7045,8 +7034,6 @@ type RecordTypePicklistValue struct {
 }
 
 type SearchLayouts struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata SearchLayouts"`
-
 	CustomTabListAdditionalFields []string `xml:"customTabListAdditionalFields,omitempty"`
 
 	ExcludedStandardButtons []string `xml:"excludedStandardButtons,omitempty"`
@@ -7067,22 +7054,16 @@ type SearchLayouts struct {
 }
 
 type SharingReason struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata SharingReason"`
-
 	*Metadata
 
 	Label string `xml:"label,omitempty"`
 }
 
 type SharingRecalculation struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata SharingRecalculation"`
-
 	ClassName string `xml:"className,omitempty"`
 }
 
 type ValidationRule struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ValidationRule"`
-
 	*Metadata
 
 	Active bool `xml:"active,omitempty"`
@@ -7097,8 +7078,6 @@ type ValidationRule struct {
 }
 
 type WebLink struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata WebLink"`
-
 	*Metadata
 
 	Availability *WebLinkAvailability `xml:"availability,omitempty"`
@@ -7213,16 +7192,12 @@ type CustomFieldTranslation struct {
 }
 
 type LookupFilterTranslation struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata LookupFilterTranslation"`
-
 	ErrorMessage string `xml:"errorMessage,omitempty"`
 
 	InformationalMessage string `xml:"informationalMessage,omitempty"`
 }
 
 type PicklistValueTranslation struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata PicklistValueTranslation"`
-
 	MasterLabel string `xml:"masterLabel,omitempty"`
 
 	Translation string `xml:"translation,omitempty"`
@@ -12715,8 +12690,6 @@ type XOrgHubSharedObject struct {
 }
 
 type SaveResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata SaveResult"`
-
 	Errors []*Error `xml:"errors,omitempty"`
 
 	FullName string `xml:"fullName,omitempty"`
@@ -12725,8 +12698,6 @@ type SaveResult struct {
 }
 
 type Error struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata Error"`
-
 	ExtendedErrorDetails []*ExtendedErrorDetails `xml:"extendedErrorDetails,omitempty"`
 
 	Fields []string `xml:"fields,omitempty"`
@@ -12737,8 +12708,6 @@ type Error struct {
 }
 
 type ExtendedErrorDetails struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ExtendedErrorDetails"`
-
 	ExtendedErrorCode *ExtendedErrorCode `xml:"extendedErrorCode,omitempty"`
 }
 
@@ -13258,6 +13227,7 @@ func (s *SOAPClient) Call(request, response interface{}) error {
 	if err := encoder.Encode(envelope); err != nil {
 		return err
 	}
+	// fmt.Println(buffer.String())
 
 	if err := encoder.Flush(); err != nil {
 		return err
