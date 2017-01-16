@@ -57,16 +57,37 @@ res, err := client.CancelDeploy(&rId)
 
 * Create Metadata
 
-```
-
+```golang
+status := metaforce.DeploymentStatus("Deployed")
+sharing := metaforce.SharingModel("ReadWrite")
+meta_type := metaforce.FieldType("Text")
+request := []metaforce.MetadataInterface{
+  &metaforce.CustomObject{
+    FullName: "Go__c",
+    Type: "CustomObject",
+    DeploymentStatus: &status,
+    Description: "from golang",
+    Label: "Go",
+    NameField: &metaforce.CustomField{
+      Label: "Go name",
+      Length: 80,
+      Type: &meta_type,
+    },
+    PluralLabel: "Go objects",
+    SharingModel: &sharing,
+  },
+}
+res, err := client.CreateMetadata(request)
 ```
 
 * Delete Metadata
+```golang
+res, err := client.DeleteMetadata("CustomObject", []string{ "GO__c" })
+```
 
 * Deploy Recent Validation
 
 * Describe Metadata
-
 ```golang
 res, err := client.DescribeMetadata()
 ```
@@ -87,10 +108,11 @@ res, err := client.ListMetadata(query)
 ```
 
 * Read Metadata
+```golang
+res, err := client.ReadMetadata("CustomObject", []string{ "GO__c" })
+```
 
 * Rename Metadata
-
-* Retrieve
 
 * Update Metadata
 

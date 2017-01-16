@@ -92,6 +92,21 @@ func (client *ForceClient) CreateMetadata(metadata []MetadataInterface) (*Create
 	return client.portType.CreateMetadata(&request)
 }
 
+func (client *ForceClient) DeleteMetadata(typeName string, fullNames []string) (*DeleteMetadataResponse, error) {
+	request := DeleteMetadata{
+		FullNames: fullNames,
+		Type: typeName,
+	}
+	return client.portType.DeleteMetadata(&request)
+}
+
+func (client *ForceClient) ReadMetadata(typeName string, fullNames []string) (*ReadMetadataResponse, error) {
+	request := ReadMetadata{
+		FullNames: fullNames,
+		Type: typeName,
+	}
+	return client.portType.ReadMetadata(&request)
+}
 
 //func (client *ForceClient) Retrieve() () {
 //	retrieve_request := Retrieve{

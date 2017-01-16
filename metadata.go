@@ -4368,7 +4368,7 @@ type CreateMetadataResponse struct {
 type DeleteMetadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata deleteMetadata"`
 
-	Type_ string `xml:"type,omitempty"`
+	Type string `xml:"type,omitempty"`
 
 	FullNames []string `xml:"fullNames,omitempty"`
 }
@@ -4446,7 +4446,7 @@ type ListMetadataResponse struct {
 type ReadMetadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata readMetadata"`
 
-	Type_ string `xml:"type,omitempty"`
+	Type string `xml:"type,omitempty"`
 
 	FullNames []string `xml:"fullNames,omitempty"`
 }
@@ -4784,8 +4784,6 @@ type RunTestSuccess struct {
 type MetadataInterface interface {}
 
 type Metadata struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata Metadata"`
-
 	FullName string `xml:"fullName,omitempty"`
 }
 
@@ -12712,8 +12710,6 @@ type ExtendedErrorDetails struct {
 }
 
 type DeleteResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata DeleteResult"`
-
 	Errors []*Error `xml:"errors,omitempty"`
 
 	FullName string `xml:"fullName,omitempty"`
@@ -12836,8 +12832,6 @@ type ListMetadataQuery struct {
 }
 
 type ReadResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata ReadResult"`
-
 	Records []*Metadata `xml:"records,omitempty"`
 }
 
