@@ -6567,6 +6567,8 @@ type CustomField struct {
 
 	FormulaTreatBlanksAs *TreatBlanksAs `xml:"formulaTreatBlanksAs,omitempty"`
 
+	FullName string `xml:"fullName"`
+
 	InlineHelpText string `xml:"inlineHelpText,omitempty"`
 
 	IsConvertLeadDisabled bool `xml:"isConvertLeadDisabled,omitempty"`
