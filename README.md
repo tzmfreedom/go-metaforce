@@ -1,16 +1,16 @@
 # Go Metaforce
 
-Salesforce MetadataAPI Client for Go
+Salesforce Metadata API Client for Go
 
 ## Usage
 
 ```go
-import "github.com/tzmfreedom/metaforce"
+import "github.com/tzmfreedom/go-metaforce"
 ```
 
 * Login to production/developer
 ```go
-client := metaforce.NewClient("", "37.0")
+client := metaforce.NewClient()
 err := client.Login("username", "password")
 ```
 
