@@ -15,7 +15,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	upsertMetadata()
+	//deploy()
+	deployRecentValidation("0Af2K00000LuQNASA3")
 }
 
 func listMetadata() {
@@ -152,6 +153,25 @@ func upsertMetadata() {
 			PluralLabel: "GOミラクルオブジェクツ",
 			SharingModel: metaforce.SharingModelReadWrite,
 		},
+	})
+	if err != nil {
+		panic(err)
+	}
+	pp.Println(res)
+}
+
+func deployRecentValidation(validationId string) {
+	res, err := client.DeployRecentValidation(validationId)
+	if err != nil {
+		panic(err)
+	}
+	pp.Println(res)
+}
+
+func deploy() {
+	buf := []byte("bytes")
+	res, err := client.Deploy(buf, &metaforce.DeployOptions{
+		CheckOnly: true,
 	})
 	if err != nil {
 		panic(err)

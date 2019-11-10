@@ -1,12 +1,6 @@
 # Go Metaforce
 
-force.com metadata api client for go
-
-## Install
-
-```bash
-$ go get github.com/tzmfreedom/metaforce
-```
+Salesforce MetadataAPI Client for Go
 
 ## Usage
 
@@ -15,7 +9,7 @@ import "github.com/tzmfreedom/metaforce"
 ```
 
 * Login to production/developer
-```
+```go
 client := metaforce.NewClient("", "37.0")
 err := client.Login("username", "password")
 ```
@@ -51,14 +45,13 @@ res, err := client.CheckDeployStatus(resultId)
 * Cancel Deploy
 
 ```go
-var rId metaforce.ID = "0Af*********"
-res, err := client.CancelDeploy(&rId)
+res, err := client.CancelDeploy("0Af*********")
 ```
 
 * Check Retrieve Status
 
-```
-
+```go
+res, err := client.DeployRecentValidation("0Af************")
 ```
 
 * Create Metadata
@@ -127,6 +120,45 @@ res, err := client.RenameMetadata(&metaforce.RenameMetadata{
 
 * Update Metadata
 
+```go
+request := []metaforce.MetadataInterface{
+  &metaforce.CustomObject{
+    FullName: "Go__c",
+    Type: "CustomObject",
+    DeploymentStatus: metaforce.DeploymentStatusDeployed,
+    Description: "from go",
+    Label: "Go",
+    NameField: &metaforce.CustomField{
+      Label: "Go name",
+      Length: 80,
+      Type: metaforce.FieldTypeText,
+    },
+    PluralLabel: "Go objects",
+    SharingModel: metaforce.SharingModelReadWrite,
+  },
+}
+res, err := client.UpdateMetadata(request)
+```
+
 * Upsert Metadata
 
+```go
+request := []metaforce.MetadataInterface{
+  &metaforce.CustomObject{
+    FullName: "Go__c",
+    Type: "CustomObject",
+    DeploymentStatus: metaforce.DeploymentStatusDeployed,
+    Description: "from go",
+    Label: "Go",
+    NameField: &metaforce.CustomField{
+      Label: "Go name",
+      Length: 80,
+      Type: metaforce.FieldTypeText,
+    },
+    PluralLabel: "Go objects",
+    SharingModel: metaforce.SharingModelReadWrite,
+  },
+}
+res, err := client.UpsertMetadata(request)
+```
 

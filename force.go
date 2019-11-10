@@ -131,3 +131,9 @@ func (client *Client) UpdateMetadata(metadata []MetadataInterface) (*UpdateMetad
 func (client *Client) UpsertMetadata(metadata []MetadataInterface) (*UpsertMetadataResponse, error) {
 	return client.portType.UpsertMetadata(&UpsertMetadata{Metadata: metadata})
 }
+
+func (client *Client) DeployRecentValidation(validationId string) (*DeployRecentValidationResponse, error) {
+	return client.portType.DeployRecentValidation(&DeployRecentValidation{
+		ValidationId: ID(validationId),
+	})
+}
