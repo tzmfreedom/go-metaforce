@@ -5,24 +5,29 @@ import (
 	"strconv"
 )
 
-type ForceClient struct {
+type Client struct {
 	portType    *MetadataPortType
 	loginResult *LoginResult
+	debug       bool
 	apiVersion  string
 }
 
-func NewForceClient(endpoint string, apiversion string) *ForceClient {
+func NewClient(endpoint string, apiversion string) *Client {
 	if endpoint == "" {
 		endpoint = "login.salesforce.com"
 	}
 	portType := NewMetadataPortType("https://"+endpoint+"/services/Soap/u/"+apiversion, true, nil)
-	return &ForceClient{
+	return &Client{
 		portType: portType,
 		apiVersion: apiversion,
 	}
 }
 
-func (client *ForceClient) Login(username string, password string) error {
+func (client *Client) SetDebug(debug bool) {
+	client.portType.SetDebug(debug)
+}
+
+func (client *Client) Login(username string, password string) error {
 	loginRequest := LoginRequest{Username: username, Password: password}
 	loginResponse, err := client.portType.Login(&loginRequest)
 	if err != nil {
@@ -37,7 +42,7 @@ func (client *ForceClient) Login(username string, password string) error {
 	return nil
 }
 
-func (client *ForceClient) Deploy(buf []byte, options *DeployOptions) (*DeployResponse, error) {
+func (client *Client) Deploy(buf []byte, options *DeployOptions) (*DeployResponse, error) {
 	request := Deploy{
 		ZipFile:       base64.StdEncoding.EncodeToString(buf),
 		DeployOptions: options,
@@ -45,17 +50,17 @@ func (client *ForceClient) Deploy(buf []byte, options *DeployOptions) (*DeployRe
 	return client.portType.Deploy(&request)
 }
 
-func (client *ForceClient) CheckDeployStatus(resultId *ID, includeDetails bool) (*CheckDeployStatusResponse, error) {
-	request := CheckDeployStatus{AsyncProcessId: resultId, IncludeDetails: includeDetails}
+func (client *Client) CheckDeployStatus(resultId string, includeDetails bool) (*CheckDeployStatusResponse, error) {
+	request := CheckDeployStatus{AsyncProcessId: ID(resultId), IncludeDetails: includeDetails}
 	return client.portType.CheckDeployStatus(&request)
 }
 
-func (client *ForceClient) CancelDeploy(processId *ID) (*CancelDeployResponse, error) {
-	request := CancelDeploy{AsyncProcessId: processId}
+func (client *Client) CancelDeploy(processId string) (*CancelDeployResponse, error) {
+	request := CancelDeploy{AsyncProcessId: ID(processId)}
 	return client.portType.CancelDeploy(&request)
 }
 
-func (client *ForceClient) DescribeMetadata() (*DescribeMetadataResponse, error) {
+func (client *Client) DescribeMetadata() (*DescribeMetadataResponse, error) {
 	f, err := strconv.ParseFloat(client.apiVersion, 32)
 	if err != nil {
 		f = 37.0
@@ -65,14 +70,14 @@ func (client *ForceClient) DescribeMetadata() (*DescribeMetadataResponse, error)
 	return client.portType.DescribeMetadata(&request)
 }
 
-func (client *ForceClient) DescribeValueType(desc_type string) (*DescribeValueTypeResponse, error) {
+func (client *Client) DescribeValueType(desc_type string) (*DescribeValueTypeResponse, error) {
 	request := DescribeValueType{
 		Type: desc_type,
 	}
 	return client.portType.DescribeValueType(&request)
 }
 
-func (client *ForceClient) ListMetadata(listMetadataQuery []*ListMetadataQuery) (*ListMetadataResponse, error) {
+func (client *Client) ListMetadata(listMetadataQuery []*ListMetadataQuery) (*ListMetadataResponse, error) {
 	f, err := strconv.ParseFloat(client.apiVersion, 32)
 	if err != nil {
 		f = 37.0
@@ -85,14 +90,14 @@ func (client *ForceClient) ListMetadata(listMetadataQuery []*ListMetadataQuery) 
 	return client.portType.ListMetadata(&request)
 }
 
-func (client *ForceClient) CreateMetadata(metadata []MetadataInterface) (*CreateMetadataResponse, error) {
+func (client *Client) CreateMetadata(metadata []MetadataInterface) (*CreateMetadataResponse, error) {
 	request := CreateMetadata{
 		Metadata: metadata,
 	}
 	return client.portType.CreateMetadata(&request)
 }
 
-func (client *ForceClient) DeleteMetadata(typeName string, fullNames []string) (*DeleteMetadataResponse, error) {
+func (client *Client) DeleteMetadata(typeName string, fullNames []string) (*DeleteMetadataResponse, error) {
 	request := DeleteMetadata{
 		FullNames: fullNames,
 		Type: typeName,
@@ -100,7 +105,7 @@ func (client *ForceClient) DeleteMetadata(typeName string, fullNames []string) (
 	return client.portType.DeleteMetadata(&request)
 }
 
-func (client *ForceClient) ReadMetadata(typeName string, fullNames []string) (*ReadMetadataResponse, error) {
+func (client *Client) ReadMetadata(typeName string, fullNames []string) (*ReadMetadataResponse, error) {
 	request := ReadMetadata{
 		FullNames: fullNames,
 		Type: typeName,
@@ -108,7 +113,7 @@ func (client *ForceClient) ReadMetadata(typeName string, fullNames []string) (*R
 	return client.portType.ReadMetadata(&request)
 }
 
-//func (client *ForceClient) Retrieve() () {
+//func (client *Client) Retrieve() () {
 //	retrieve_request := Retrieve{
 //		RetrieveRequest: &RetrieveRequest{
 //			ApiVersion: "37.0",

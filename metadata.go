@@ -8,7 +8,7 @@ import (
 	"net"
 	"net/http"
 	"time"
-	_ "fmt"
+	"fmt"
 )
 
 // against "unused imports"
@@ -4316,7 +4316,7 @@ type SessionHeader struct {
 type CancelDeploy struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata cancelDeploy"`
 
-	AsyncProcessId *ID `xml:"String,omitempty"`
+	AsyncProcessId ID `xml:"String,omitempty"`
 }
 
 type CancelDeployResponse struct {
@@ -4328,7 +4328,7 @@ type CancelDeployResponse struct {
 type CheckDeployStatus struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata checkDeployStatus"`
 
-	AsyncProcessId *ID `xml:"asyncProcessId,omitempty"`
+	AsyncProcessId ID `xml:"asyncProcessId,omitempty"`
 
 	IncludeDetails bool `xml:"includeDetails,omitempty"`
 }
@@ -4342,7 +4342,7 @@ type CheckDeployStatusResponse struct {
 type CheckRetrieveStatus struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata checkRetrieveStatus"`
 
-	AsyncProcessId *ID `xml:"asyncProcessId,omitempty"`
+	AsyncProcessId ID `xml:"asyncProcessId,omitempty"`
 
 	IncludeZip bool `xml:"includeZip,omitempty"`
 }
@@ -4354,13 +4354,13 @@ type CheckRetrieveStatusResponse struct {
 }
 
 type CreateMetadata struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata create"`
+	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createMetadata"`
 
 	Metadata []MetadataInterface `xml:"metadata,omitempty"`
 }
 
 type CreateMetadataResponse struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createResponse"`
+	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata createMetadataResponse"`
 
 	Result []*SaveResult `xml:"result,omitempty"`
 }
@@ -4396,7 +4396,7 @@ type DeployResponse struct {
 type DeployRecentValidation struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata deployRecentValidation"`
 
-	ValidationId *ID `xml:"validationId,omitempty"`
+	ValidationId ID `xml:"validationId,omitempty"`
 }
 
 type DeployRecentValidationResponse struct {
@@ -4514,7 +4514,7 @@ type CancelDeployResult struct {
 
 	Done bool `xml:"done,omitempty"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 }
 
 type DeployResult struct {
@@ -4540,9 +4540,9 @@ type DeployResult struct {
 
 	ErrorMessage string `xml:"errorMessage,omitempty"`
 
-	ErrorStatusCode *StatusCode `xml:"errorStatusCode,omitempty"`
+	ErrorStatusCode StatusCode `xml:"errorStatusCode,omitempty"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	IgnoreWarnings bool `xml:"ignoreWarnings,omitempty"`
 
@@ -4622,7 +4622,7 @@ type RetrieveResult struct {
 
 	ErrorMessage string `xml:"errorMessage,omitempty"`
 
-	ErrorStatusCode *StatusCode `xml:"errorStatusCode,omitempty"`
+	ErrorStatusCode StatusCode `xml:"errorStatusCode,omitempty"`
 
 	FileProperties []*FileProperties `xml:"fileProperties,omitempty"`
 
@@ -4656,7 +4656,7 @@ type FileProperties struct {
 
 	LastModifiedDate time.Time `xml:"lastModifiedDate,omitempty"`
 
-	ManageableState *ManageableState `xml:"manageableState,omitempty"`
+	ManageableState ManageableState `xml:"manageableState,omitempty"`
 
 	NamespacePrefix string `xml:"namespacePrefix,omitempty"`
 
@@ -4696,7 +4696,7 @@ type CodeCoverageResult struct {
 
 	DmlInfo []*CodeLocation `xml:"dmlInfo,omitempty"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	LocationsNotCovered []*CodeLocation `xml:"locationsNotCovered,omitempty"`
 
@@ -4732,7 +4732,7 @@ type CodeLocation struct {
 type CodeCoverageWarning struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata CodeCoverageWarning"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	Message string `xml:"message,omitempty"`
 
@@ -4744,7 +4744,7 @@ type CodeCoverageWarning struct {
 type RunTestFailure struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata RunTestFailure"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	Message string `xml:"message,omitempty"`
 
@@ -4768,7 +4768,7 @@ type RunTestFailure struct {
 type RunTestSuccess struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata RunTestSuccess"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	MethodName string `xml:"methodName,omitempty"`
 
@@ -6632,7 +6632,7 @@ type CustomField struct {
 
 	TrackTrending bool `xml:"trackTrending,omitempty"`
 
-	Type *FieldType `xml:"type,omitempty"`
+	Type FieldType `xml:"type,omitempty"`
 
 	Unique bool `xml:"unique,omitempty"`
 
@@ -6808,7 +6808,7 @@ type CustomObject struct {
 
 	CustomSettingsType *CustomSettingsType `xml:"customSettingsType,omitempty"`
 
-	DeploymentStatus *DeploymentStatus `xml:"deploymentStatus,omitempty"`
+	DeploymentStatus DeploymentStatus `xml:"deploymentStatus,omitempty"`
 
 	Deprecated bool `xml:"deprecated,omitempty"`
 
@@ -6840,7 +6840,7 @@ type CustomObject struct {
 
 	ExternalRepository string `xml:"externalRepository,omitempty"`
 
-	ExternalSharingModel *SharingModel `xml:"externalSharingModel,omitempty"`
+	ExternalSharingModel SharingModel `xml:"externalSharingModel,omitempty"`
 
 	FieldSets []*FieldSet `xml:"fieldSets,omitempty"`
 
@@ -6868,7 +6868,7 @@ type CustomObject struct {
 
 	SearchLayouts *SearchLayouts `xml:"searchLayouts,omitempty"`
 
-	SharingModel *SharingModel `xml:"sharingModel,omitempty"`
+	SharingModel SharingModel `xml:"sharingModel,omitempty"`
 
 	SharingReasons []*SharingReason `xml:"sharingReasons,omitempty"`
 
@@ -12702,7 +12702,7 @@ type Error struct {
 
 	Message string `xml:"message,omitempty"`
 
-	StatusCode *StatusCode `xml:"statusCode,omitempty"`
+	StatusCode StatusCode `xml:"statusCode,omitempty"`
 }
 
 type ExtendedErrorDetails struct {
@@ -12744,13 +12744,13 @@ type DeployOptions struct {
 type AsyncResult struct {
 	Done bool `xml:"done,omitempty"`
 
-	Id *ID `xml:"id,omitempty"`
+	Id ID `xml:"id,omitempty"`
 
 	Message string `xml:"message,omitempty"`
 
-	State *AsyncRequestState `xml:"state,omitempty"`
+	State AsyncRequestState `xml:"state,omitempty"`
 
-	StatusCode *StatusCode `xml:"statusCode,omitempty"`
+	StatusCode StatusCode `xml:"statusCode,omitempty"`
 }
 
 type DescribeMetadataResult struct {
@@ -12886,12 +12886,16 @@ type LoginResult struct {
 	Sandbox           bool   `xml:"sandbox`
 	ServerUrl         string `xml:"serverUrl"`
 	SessionId         string `xml:"sessionId"`
-	UserId            *ID    `xml:"userId"`
+	UserId            ID    `xml:"userId"`
 	//	UserInfo *UserInfo `xml:"userInfo"`
 }
 
 type MetadataPortType struct {
 	client *SOAPClient
+}
+
+func (service *MetadataPortType) SetDebug(debug bool) {
+	service.client.SetDebug(debug)
 }
 
 func (service *MetadataPortType) SetServerUrl(url string) {
@@ -13133,6 +13137,7 @@ type SOAPClient struct {
 	url    string
 	tls    bool
 	auth   *BasicAuth
+	debug  bool
 	header interface{}
 }
 
@@ -13198,6 +13203,10 @@ func NewSOAPClient(url string, tls bool, auth *BasicAuth) *SOAPClient {
 	}
 }
 
+func (s *SOAPClient) SetDebug(debug bool) {
+	s.debug = debug
+}
+
 func (s *SOAPClient) SetHeader(header interface{}) {
 	s.header = header
 }
@@ -13221,7 +13230,9 @@ func (s *SOAPClient) Call(request, response interface{}) error {
 	if err := encoder.Encode(envelope); err != nil {
 		return err
 	}
-	// fmt.Println(buffer.String())
+	if s.debug {
+		fmt.Println(buffer.String())
+	}
 
 	if err := encoder.Flush(); err != nil {
 		return err
@@ -13265,6 +13276,9 @@ func (s *SOAPClient) Call(request, response interface{}) error {
 
 	respEnvelope := new(SOAPEnvelope)
 	respEnvelope.Body = SOAPBody{Content: response}
+	if s.debug {
+		fmt.Println(bytes.NewBuffer(rawbody).String())
+	}
 	err = xml.Unmarshal(rawbody, respEnvelope)
 	if err != nil {
 		return err
