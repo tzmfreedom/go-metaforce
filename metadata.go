@@ -4460,7 +4460,7 @@ type ReadMetadataResponse struct {
 type RenameMetadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata renameMetadata"`
 
-	Type_ string `xml:"type,omitempty"`
+	Type string `xml:"type,omitempty"`
 
 	OldFullName string `xml:"oldFullName,omitempty"`
 
@@ -4488,7 +4488,7 @@ type RetrieveResponse struct {
 type UpdateMetadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata updateMetadata"`
 
-	Metadata []*Metadata `xml:"metadata,omitempty"`
+	Metadata []MetadataInterface `xml:"metadata,omitempty"`
 }
 
 type UpdateMetadataResponse struct {
@@ -4500,7 +4500,7 @@ type UpdateMetadataResponse struct {
 type UpsertMetadata struct {
 	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata upsertMetadata"`
 
-	Metadata []*Metadata `xml:"metadata,omitempty"`
+	Metadata []MetadataInterface `xml:"metadata,omitempty"`
 }
 
 type UpsertMetadataResponse struct {
@@ -10656,8 +10656,6 @@ type OrganizationSettingsDetail struct {
 }
 
 type Package struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata Package"`
-
 	*Metadata
 
 	ApiAccessLevel *APIAccessLevel `xml:"apiAccessLevel,omitempty"`
@@ -12836,8 +12834,6 @@ type ReadResult struct {
 }
 
 type RetrieveRequest struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata RetrieveRequest"`
-
 	ApiVersion float64 `xml:"apiVersion,omitempty"`
 
 	PackageNames []string `xml:"packageNames,omitempty"`
@@ -12850,8 +12846,6 @@ type RetrieveRequest struct {
 }
 
 type UpsertResult struct {
-	XMLName xml.Name `xml:"http://soap.sforce.com/2006/04/metadata UpsertResult"`
-
 	Created bool `xml:"created,omitempty"`
 
 	Errors []*Error `xml:"errors,omitempty"`

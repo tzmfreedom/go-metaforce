@@ -113,15 +113,21 @@ func (client *Client) ReadMetadata(typeName string, fullNames []string) (*ReadMe
 	return client.portType.ReadMetadata(&request)
 }
 
-//func (client *Client) Retrieve() () {
-//	retrieve_request := Retrieve{
-//		RetrieveRequest: &RetrieveRequest{
-//			ApiVersion: "37.0",
-//			PackageNames,
-//			SinglePackage,
-//			SpecificFiles,
-//			Unpackaged *Package,
-//		},
-//	}
-//	return client.portType.Retrieve(retrieve_request)
-//}
+func (client *Client) Retrieve(retrieveRequest *RetrieveRequest) (*RetrieveResponse, error) {
+	r := &Retrieve{
+		RetrieveRequest: retrieveRequest,
+	}
+	return client.portType.Retrieve(r)
+}
+
+func (client *Client) RenameMetadata(r *RenameMetadata) (*RenameMetadataResponse, error) {
+	return client.portType.RenameMetadata(r)
+}
+
+func (client *Client) UpdateMetadata(metadata []MetadataInterface) (*UpdateMetadataResponse, error) {
+	return client.portType.UpdateMetadata(&UpdateMetadata{Metadata: metadata})
+}
+
+func (client *Client) UpsertMetadata(metadata []MetadataInterface) (*UpsertMetadataResponse, error) {
+	return client.portType.UpsertMetadata(&UpsertMetadata{Metadata: metadata})
+}

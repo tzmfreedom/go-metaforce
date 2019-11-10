@@ -1,6 +1,6 @@
 # Go Metaforce
 
-force.com metadata api client for golang
+force.com metadata api client for go
 
 ## Install
 
@@ -10,41 +10,47 @@ $ go get github.com/tzmfreedom/metaforce
 
 ## Usage
 
-```golang
+```go
 import "github.com/tzmfreedom/metaforce"
 ```
 
 * Login to production/developer
 ```
-client := metaforce.NewForceClient("", "37.0")
+client := metaforce.NewClient("", "37.0")
 err := client.Login("username", "password")
 ```
 
 * Login to sandbox
-```golang
-client := metaforce.NewForceClient("test.salesforce.com", "37.0")
+```go
+client := metaforce.NewClient("test.salesforce.com", "37.0")
 err := client.Login("username", "password")
 ```
 
 * Retrieve Metadata
-```golang
-
+```go
+res, err := client.Retrieve(&metaforce.RetrieveRequest{
+ 	ApiVersion: 37.0,
+   	PackageNames: []string{"CustomObject"},
+   	SinglePackage: true,
+   	SpecificFiles: []string{},
+   	Unpackaged: nil,
+})
 ```
 
 * Deploy
-```golang
+```go
 res, err := client.Deploy(buf.Bytes())
 ```
 
 * Check Deploy Status
 
-```golang
+```go
 res, err := client.CheckDeployStatus(resultId)
 ```
 
 * Cancel Deploy
 
-```golang
+```go
 var rId metaforce.ID = "0Af*********"
 res, err := client.CancelDeploy(&rId)
 ```
@@ -57,48 +63,45 @@ res, err := client.CancelDeploy(&rId)
 
 * Create Metadata
 
-```golang
-status := metaforce.DeploymentStatus("Deployed")
-sharing := metaforce.SharingModel("ReadWrite")
-meta_type := metaforce.FieldType("Text")
+```go
 request := []metaforce.MetadataInterface{
   &metaforce.CustomObject{
     FullName: "Go__c",
     Type: "CustomObject",
-    DeploymentStatus: &status,
-    Description: "from golang",
+    DeploymentStatus: metaforce.DeploymentStatusDeployed,
+    Description: "from go",
     Label: "Go",
     NameField: &metaforce.CustomField{
       Label: "Go name",
       Length: 80,
-      Type: &meta_type,
+      Type: metaforce.FieldTypeText,
     },
     PluralLabel: "Go objects",
-    SharingModel: &sharing,
+    SharingModel: metaforce.SharingModelReadWrite,
   },
 }
 res, err := client.CreateMetadata(request)
 ```
 
 * Delete Metadata
-```golang
+```go
 res, err := client.DeleteMetadata("CustomObject", []string{ "GO__c" })
 ```
 
 * Deploy Recent Validation
 
 * Describe Metadata
-```golang
+```go
 res, err := client.DescribeMetadata()
 ```
 
 * Describe ValueType
-```golang
+```go
 res, err := client.DescribeValueType("{http://soap.sforce.com/2006/04/metadata}ApexClass")
 ```
 
 * List Metadata
-```golang
+```go
 query := []*metaforce.ListMetadataQuery{
   &metaforce.ListMetadataQuery{
     Type: "ApexClass",
@@ -108,12 +111,22 @@ res, err := client.ListMetadata(query)
 ```
 
 * Read Metadata
-```golang
+```go
 res, err := client.ReadMetadata("CustomObject", []string{ "GO__c" })
 ```
 
 * Rename Metadata
 
+```go
+res, err := client.RenameMetadata(&metaforce.RenameMetadata{
+	Type: "CustomObject",
+    OldFullName: "OLD__c",
+    NewFullName: "NEW__c",
+})
+```
+
 * Update Metadata
 
 * Upsert Metadata
+
+
