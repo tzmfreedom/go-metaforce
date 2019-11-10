@@ -2,30 +2,78 @@ package metaforce
 
 import (
 	"encoding/base64"
+	"fmt"
+	"io"
 	"strconv"
 )
 
+const (
+	DefaultApiVersion = "44.0"
+	DefaultLoginUrl   = "login.salesforce.com"
+)
+
 type Client struct {
+	ApiVersion string
+	ServerUrl  string
+	LoginUrl   string
 	portType    *MetadataPortType
 	loginResult *LoginResult
 	debug       bool
-	apiVersion  string
 }
 
 func NewClient(endpoint string, apiversion string) *Client {
-	if endpoint == "" {
-		endpoint = "login.salesforce.com"
-	}
-	portType := NewMetadataPortType("https://"+endpoint+"/services/Soap/u/"+apiversion, true, nil)
+	portType := NewMetadataPortType("", true, nil)
 	return &Client{
 		portType: portType,
-		apiVersion: apiversion,
+		LoginUrl: DefaultLoginUrl,
+		ApiVersion: DefaultApiVersion,
 	}
 }
 
 func (client *Client) SetDebug(debug bool) {
 	client.portType.SetDebug(debug)
 }
+
+func (c *Client) SetApiVersion(v string) {
+	c.ApiVersion = v
+	c.setLoginUrl()
+}
+
+func (c *Client) SetAccessToken(sid string) {
+	sessionHeader := &SessionHeader{
+		SessionId: sid,
+	}
+	c.portType.SetHeader(sessionHeader)
+}
+
+func (c *Client) SetLoginUrl(url string) {
+	c.LoginUrl = url
+	c.setLoginUrl()
+}
+
+func (c *Client) setLoginUrl() {
+	url := fmt.Sprintf("https://%s/services/Soap/u/%s", c.LoginUrl, c.ApiVersion)
+	c.portType.SetServerUrl(url)
+}
+
+func (c *Client) SetLogger(logger io.Writer) {
+	c.portType.SetLogger(logger)
+}
+
+func (c *Client) SetGzip(gz bool) {
+	c.portType.SetGzip(gz)
+}
+
+//func (c *Client) Logout() error {
+//	_, err := c.portType.Logout(&soapforce.Logout{})
+//	if err != nil {
+//		return err
+//	}
+//	c.ServerUrl = ""
+//	c.setLoginUrl()
+//	c.portType.ClearHeader()
+//	return nil
+//}
 
 func (client *Client) Login(username string, password string) error {
 	loginRequest := LoginRequest{Username: username, Password: password}
@@ -61,7 +109,7 @@ func (client *Client) CancelDeploy(processId string) (*CancelDeployResponse, err
 }
 
 func (client *Client) DescribeMetadata() (*DescribeMetadataResponse, error) {
-	f, err := strconv.ParseFloat(client.apiVersion, 32)
+	f, err := strconv.ParseFloat(client.ApiVersion, 32)
 	if err != nil {
 		f = 37.0
 	}
@@ -78,7 +126,7 @@ func (client *Client) DescribeValueType(desc_type string) (*DescribeValueTypeRes
 }
 
 func (client *Client) ListMetadata(listMetadataQuery []*ListMetadataQuery) (*ListMetadataResponse, error) {
-	f, err := strconv.ParseFloat(client.apiVersion, 32)
+	f, err := strconv.ParseFloat(client.ApiVersion, 32)
 	if err != nil {
 		f = 37.0
 	}
