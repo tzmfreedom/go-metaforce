@@ -12902,6 +12902,9 @@ func (service *MetadataPortType) SetGzip(gz bool) {
 }
 
 func NewMetadataPortType(url string, tls bool, auth *soapforce.BasicAuth) *MetadataPortType {
+	if url == "" {
+		url = "https://login.salesforce.com/services/Soap/u/38.0"
+	}
 	client := soapforce.NewSOAPClient(url, tls, auth)
 
 	return &MetadataPortType{

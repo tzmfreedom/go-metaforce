@@ -21,7 +21,7 @@ type Client struct {
 	debug       bool
 }
 
-func NewClient(endpoint string, apiversion string) *Client {
+func NewClient() *Client {
 	portType := NewMetadataPortType("", true, nil)
 	return &Client{
 		portType: portType,
