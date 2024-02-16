@@ -2,10 +2,11 @@ package metaforce
 
 import (
 	"encoding/xml"
-	"github.com/tzmfreedom/go-soapforce"
 	"io"
 	"net"
 	"time"
+
+	"github.com/tzmfreedom/go-soapforce"
 )
 
 // against "unused imports"
@@ -4778,7 +4779,7 @@ type RunTestSuccess struct {
 	Time float64 `xml:"time,omitempty"`
 }
 
-type MetadataInterface interface {}
+type MetadataInterface interface{}
 
 type Metadata struct {
 	FullName string `xml:"fullName,omitempty"`
@@ -12879,7 +12880,7 @@ type LoginResult struct {
 	Sandbox           bool   `xml:"sandbox`
 	ServerUrl         string `xml:"serverUrl"`
 	SessionId         string `xml:"sessionId"`
-	UserId            ID    `xml:"userId"`
+	UserId            ID     `xml:"userId"`
 	//	UserInfo *UserInfo `xml:"userInfo"`
 }
 
@@ -12921,7 +12922,7 @@ func (service *MetadataPortType) SetHeader(header interface{}) {
 /* Cancels a metadata deploy. */
 func (service *MetadataPortType) CancelDeploy(request *CancelDeploy) (*CancelDeployResponse, error) {
 	response := new(CancelDeployResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12932,7 +12933,7 @@ func (service *MetadataPortType) CancelDeploy(request *CancelDeploy) (*CancelDep
 /* Check the current status of an asyncronous deploy call. */
 func (service *MetadataPortType) CheckDeployStatus(request *CheckDeployStatus) (*CheckDeployStatusResponse, error) {
 	response := new(CheckDeployStatusResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12943,7 +12944,7 @@ func (service *MetadataPortType) CheckDeployStatus(request *CheckDeployStatus) (
 /* Check the current status of an asyncronous deploy call. */
 func (service *MetadataPortType) CheckRetrieveStatus(request *CheckRetrieveStatus) (*CheckRetrieveStatusResponse, error) {
 	response := new(CheckRetrieveStatusResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12954,7 +12955,7 @@ func (service *MetadataPortType) CheckRetrieveStatus(request *CheckRetrieveStatu
 /* Creates metadata entries synchronously. */
 func (service *MetadataPortType) CreateMetadata(request *CreateMetadata) (*CreateMetadataResponse, error) {
 	response := new(CreateMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12965,7 +12966,7 @@ func (service *MetadataPortType) CreateMetadata(request *CreateMetadata) (*Creat
 /* Deletes metadata entries synchronously. */
 func (service *MetadataPortType) DeleteMetadata(request *DeleteMetadata) (*DeleteMetadataResponse, error) {
 	response := new(DeleteMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12977,7 +12978,7 @@ func (service *MetadataPortType) DeleteMetadata(request *DeleteMetadata) (*Delet
 func (service *MetadataPortType) Deploy(request *Deploy) (*DeployResponse, error) {
 	response := new(DeployResponse)
 	// modify
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12988,7 +12989,7 @@ func (service *MetadataPortType) Deploy(request *Deploy) (*DeployResponse, error
 /* Deploys a previously validated payload without running tests. */
 func (service *MetadataPortType) DeployRecentValidation(request *DeployRecentValidation) (*DeployRecentValidationResponse, error) {
 	response := new(DeployRecentValidationResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -12999,7 +13000,7 @@ func (service *MetadataPortType) DeployRecentValidation(request *DeployRecentVal
 /* Describes features of the metadata API. */
 func (service *MetadataPortType) DescribeMetadata(request *DescribeMetadata) (*DescribeMetadataResponse, error) {
 	response := new(DescribeMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13010,7 +13011,7 @@ func (service *MetadataPortType) DescribeMetadata(request *DescribeMetadata) (*D
 /* Describe a complex value type */
 func (service *MetadataPortType) DescribeValueType(request *DescribeValueType) (*DescribeValueTypeResponse, error) {
 	response := new(DescribeValueTypeResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13021,7 +13022,7 @@ func (service *MetadataPortType) DescribeValueType(request *DescribeValueType) (
 /* Lists the available metadata components. */
 func (service *MetadataPortType) ListMetadata(request *ListMetadata) (*ListMetadataResponse, error) {
 	response := new(ListMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13032,7 +13033,7 @@ func (service *MetadataPortType) ListMetadata(request *ListMetadata) (*ListMetad
 /* Reads metadata entries synchronously. */
 func (service *MetadataPortType) ReadMetadata(request *ReadMetadata) (*ReadMetadataResponse, error) {
 	response := new(ReadMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13043,7 +13044,7 @@ func (service *MetadataPortType) ReadMetadata(request *ReadMetadata) (*ReadMetad
 /* Renames a metadata entry synchronously. */
 func (service *MetadataPortType) RenameMetadata(request *RenameMetadata) (*RenameMetadataResponse, error) {
 	response := new(RenameMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13054,7 +13055,7 @@ func (service *MetadataPortType) RenameMetadata(request *RenameMetadata) (*Renam
 /* Retrieves a set of individually specified metadata entries. */
 func (service *MetadataPortType) Retrieve(request *Retrieve) (*RetrieveResponse, error) {
 	response := new(RetrieveResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13065,7 +13066,7 @@ func (service *MetadataPortType) Retrieve(request *Retrieve) (*RetrieveResponse,
 /* Updates metadata entries synchronously. */
 func (service *MetadataPortType) UpdateMetadata(request *UpdateMetadata) (*UpdateMetadataResponse, error) {
 	response := new(UpdateMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13076,7 +13077,7 @@ func (service *MetadataPortType) UpdateMetadata(request *UpdateMetadata) (*Updat
 /* Upserts metadata entries synchronously. */
 func (service *MetadataPortType) UpsertMetadata(request *UpsertMetadata) (*UpsertMetadataResponse, error) {
 	response := new(UpsertMetadataResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}
@@ -13087,7 +13088,7 @@ func (service *MetadataPortType) UpsertMetadata(request *UpsertMetadata) (*Upser
 /* Upserts metadata entries synchronously. */
 func (service *MetadataPortType) Login(request *LoginRequest) (*LoginResponse, error) {
 	response := new(LoginResponse)
-	err := service.client.Call(request, response)
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
 	if err != nil {
 		return nil, err
 	}

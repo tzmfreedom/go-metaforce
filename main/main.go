@@ -1,15 +1,16 @@
 package main
 
 import (
+	"os"
+
 	"github.com/k0kubun/pp"
 	"github.com/tzmfreedom/go-metaforce"
-	"os"
 )
 
 var client *metaforce.Client
 
 func main() {
-	client = metaforce.NewClient("", "47.0")
+	client = metaforce.NewClient()
 	client.SetDebug(true)
 	err := client.Login(os.Getenv("SALESFORCE_USERNAME"), os.Getenv("SALESFORCE_PASSWORD"))
 	if err != nil {
@@ -33,7 +34,7 @@ func listMetadata() {
 }
 
 func readMetadata() {
-	res, err := client.ReadMetadata("CustomObject", []string{ "GO__c" })
+	res, err := client.ReadMetadata("CustomObject", []string{"GO__c"})
 	if err != nil {
 		panic(err)
 	}
@@ -43,17 +44,17 @@ func readMetadata() {
 func createMetadata() {
 	request := []metaforce.MetadataInterface{
 		&metaforce.CustomObject{
-			FullName: "GO222__c",
-			Type: "CustomObject",
+			FullName:         "GO222__c",
+			Type:             "CustomObject",
 			DeploymentStatus: metaforce.DeploymentStatusDeployed,
-			Description: "これはGOから作ってるよ",
-			Label: "GOミラクルオブジェクト",
+			Description:      "これはGOから作ってるよ",
+			Label:            "GOミラクルオブジェクト",
 			NameField: &metaforce.CustomField{
-				Label: "GO名",
+				Label:  "GO名",
 				Length: 80,
-				Type: metaforce.FieldTypeText,
+				Type:   metaforce.FieldTypeText,
 			},
-			PluralLabel: "GOミラクルオブジェクツ",
+			PluralLabel:  "GOミラクルオブジェクツ",
 			SharingModel: metaforce.SharingModelReadWrite,
 		},
 	}
@@ -65,7 +66,7 @@ func createMetadata() {
 }
 
 func deleteMetadata() {
-	res, err := client.DeleteMetadata("CustomObject", []string{ "GO222__c" })
+	res, err := client.DeleteMetadata("CustomObject", []string{"GO222__c"})
 	if err != nil {
 		panic(err)
 	}
@@ -74,11 +75,11 @@ func deleteMetadata() {
 
 func retrieve() {
 	res, err := client.Retrieve(&metaforce.RetrieveRequest{
-		ApiVersion: 37.0,
-		PackageNames: []string{"CustomObject"},
+		ApiVersion:    37.0,
+		PackageNames:  []string{"CustomObject"},
 		SinglePackage: true,
 		SpecificFiles: []string{},
-		Unpackaged: nil,
+		Unpackaged:    nil,
 	})
 	if err != nil {
 		panic(err)
@@ -104,7 +105,7 @@ func describeValueType() {
 
 func renameMetadata() {
 	res, err := client.RenameMetadata(&metaforce.RenameMetadata{
-		Type: "CustomObject",
+		Type:        "CustomObject",
 		OldFullName: "GO1__c",
 		NewFullName: "GO2__c",
 	})
@@ -117,17 +118,17 @@ func renameMetadata() {
 func updateMetadata() {
 	res, err := client.UpdateMetadata([]metaforce.MetadataInterface{
 		&metaforce.CustomObject{
-			FullName: "GO2__c",
-			Type: "CustomObject",
+			FullName:         "GO2__c",
+			Type:             "CustomObject",
 			DeploymentStatus: metaforce.DeploymentStatusDeployed,
-			Description: "これはGOから作ってるよ 2",
-			Label: "GOミラクルオブジェクト",
+			Description:      "これはGOから作ってるよ 2",
+			Label:            "GOミラクルオブジェクト",
 			NameField: &metaforce.CustomField{
-				Label: "GO名",
+				Label:  "GO名",
 				Length: 80,
-				Type: metaforce.FieldTypeText,
+				Type:   metaforce.FieldTypeText,
 			},
-			PluralLabel: "GOミラクルオブジェクツ",
+			PluralLabel:  "GOミラクルオブジェクツ",
 			SharingModel: metaforce.SharingModelReadWrite,
 		},
 	})
@@ -140,17 +141,17 @@ func updateMetadata() {
 func upsertMetadata() {
 	res, err := client.UpsertMetadata([]metaforce.MetadataInterface{
 		&metaforce.CustomObject{
-			FullName: "GO1__c",
-			Type: "CustomObject",
+			FullName:         "GO1__c",
+			Type:             "CustomObject",
 			DeploymentStatus: metaforce.DeploymentStatusDeployed,
-			Description: "これはGOから作ってるよ 3",
-			Label: "GOミラクルオブジェクト",
+			Description:      "これはGOから作ってるよ 3",
+			Label:            "GOミラクルオブジェクト",
 			NameField: &metaforce.CustomField{
-				Label: "GO名",
+				Label:  "GO名",
 				Length: 80,
-				Type: metaforce.FieldTypeText,
+				Type:   metaforce.FieldTypeText,
 			},
-			PluralLabel: "GOミラクルオブジェクツ",
+			PluralLabel:  "GOミラクルオブジェクツ",
 			SharingModel: metaforce.SharingModelReadWrite,
 		},
 	})
