@@ -196,3 +196,19 @@ func (client *Client) DeployRecentValidation(validationId string) (*DeployRecent
 		ValidationId: ID(validationId),
 	})
 }
+
+func (client *Client) ReadMetadataInto(typeName string, fullNames []string, response any) error {
+	request := ReadMetadata{
+		FullNames: fullNames,
+		Type:      typeName,
+	}
+	return client.portType.ReadMetadataInto(&request, response)
+}
+
+func (service *MetadataPortType) ReadMetadataInto(request *ReadMetadata, response any) error {
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
+	if err != nil {
+		return err
+	}
+	return nil
+}
