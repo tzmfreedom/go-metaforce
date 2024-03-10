@@ -13096,6 +13096,14 @@ func (service *MetadataPortType) Login(request *LoginRequest) (*LoginResponse, e
 	return response, nil
 }
 
+func (service *MetadataPortType) ReadMetadataInto(request *ReadMetadata, response interface{}) error {
+	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 var timeout = time.Duration(30 * time.Second)
 
 func dialTimeout(network, addr string) (net.Conn, error) {
