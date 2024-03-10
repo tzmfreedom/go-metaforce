@@ -205,10 +205,3 @@ func (client *Client) ReadMetadataInto(typeName string, fullNames []string, resp
 	return client.portType.ReadMetadataInto(&request, response)
 }
 
-func (service *MetadataPortType) ReadMetadataInto(request *ReadMetadata, response interface{}) error {
-	err := service.client.Call(request, response, &soapforce.ResponseSOAPHeader{})
-	if err != nil {
-		return err
-	}
-	return nil
-}
