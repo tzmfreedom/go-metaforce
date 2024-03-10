@@ -46,6 +46,17 @@ func (c *Client) SetAccessToken(sid string) {
 	c.portType.SetHeader(sessionHeader)
 }
 
+func (c *Client) GetSessionID() string {
+	if c.loginResult == nil {
+		return ""
+	}
+	return c.loginResult.SessionId
+}
+
+func (c *Client) GetServerURL() string {
+	return c.portType.client.GetServerUrl()
+}
+
 func (c *Client) SetLoginUrl(url string) {
 	c.LoginUrl = url
 	c.setLoginUrl()
