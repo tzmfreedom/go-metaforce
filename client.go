@@ -46,6 +46,17 @@ func (c *Client) SetAccessToken(sid string) {
 	c.portType.SetHeader(sessionHeader)
 }
 
+func (c *Client) GetSessionID() string {
+	if c.loginResult == nil {
+		return ""
+	}
+	return c.loginResult.SessionId
+}
+
+func (c *Client) GetServerURL() string {
+	return c.portType.client.GetServerUrl()
+}
+
 func (c *Client) SetLoginUrl(url string) {
 	c.LoginUrl = url
 	c.setLoginUrl()
@@ -185,3 +196,12 @@ func (client *Client) DeployRecentValidation(validationId string) (*DeployRecent
 		ValidationId: ID(validationId),
 	})
 }
+
+func (client *Client) ReadMetadataInto(typeName string, fullNames []string, response interface{}) error {
+	request := ReadMetadata{
+		FullNames: fullNames,
+		Type:      typeName,
+	}
+	return client.portType.ReadMetadataInto(&request, response)
+}
+
